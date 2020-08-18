@@ -1,0 +1,6 @@
+package Interfaces;
+
+public interface BocadoInterface {
+	//public int InsertBocado()
+	
+}

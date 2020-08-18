@@ -1,0 +1,38 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Bocados;
+import Class.Proyecciones;
+import Utils.MySQLConexion;
+
+public class BocadosM {
+	private Connection con;
+	private CallableStatement call;
+	private ArrayList<Bocados> listaBocados;
+	private int rs;
+	private ResultSet res;
+	MySQLConexion mysql;
+	
+	public BocadosM(){
+		mysql = new MySQLConexion();
+		con = mysql.getConection();
+	}
+	public ArrayList<Bocados> ListarBocados(){
+		try {
+			call = (CallableStatement) con.prepareCall("call ListarBocados()");
+			res = call.executeQuery();
+			while(res.next()){
+				Bocados bocados = new Bocados(res.getInt(1), res.getString(2), res.getString(3),res.getDouble(4));
+				listaBocados.add(bocados);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return listaBocados;
+	}
+}

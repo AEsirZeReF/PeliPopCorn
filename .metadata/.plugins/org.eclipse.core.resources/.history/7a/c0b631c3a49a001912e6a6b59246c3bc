@@ -1,0 +1,10 @@
+package Interfaces;
+
+import Class.Peliculas;
+
+public interface PeliculasInterface {
+	
+	public int InsertPeliculas(Peliculas peliculas);
+	
+	public int UpdatePeliculas(Peliculas peliculas);
+}

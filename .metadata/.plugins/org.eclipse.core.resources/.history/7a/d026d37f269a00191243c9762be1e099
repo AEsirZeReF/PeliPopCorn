@@ -1,0 +1,47 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Peliculas;
+import Utils.MySQLConexion;
+
+public class PeliculasM {
+	private Connection con;
+	private PreparedStatement prepar;
+	private CallableStatement call;
+	MySQLConexion mysql;
+	
+	public PeliculasM(){
+		
+		mysql = new MySQLConexion();
+		con = mysql.getConection();
+	}
+	
+	public void AgregarPeliculas(Peliculas pelicula){
+		try {
+			
+			prepar = con.prepareCall("call AgregarPelicula(?,?,?,?,?,?)");
+			prepar.setInt(1,pelicula.getIdClasificacion());
+			prepar.setString(2,	 pelicula.getNombrePelicula());
+			prepar.setString(3, pelicula.getGeneroPelicula());
+			prepar.setString(4, pelicula.getDescripcionPelicula());
+			prepar.setString(5, pelicula.getDuracionPelicula());
+			prepar.setString(6, pelicula.getEstrenoPelicula());
+			int rs = prepar.executeUpdate();
+			
+			JOptionPane.showMessageDialog(null, "se agrego una nueva pelicula");
+			//values (idClasificacion,nombre,genero,descripcion,duracion,fecha);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+	}
+
+}

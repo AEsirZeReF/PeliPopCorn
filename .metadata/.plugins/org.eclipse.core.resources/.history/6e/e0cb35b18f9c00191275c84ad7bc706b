@@ -1,0 +1,20 @@
+package Interfaces;
+
+import java.util.ArrayList;
+
+import Class.ListaFactura;
+import Class.ListaTicket;
+import Mantenimientos.CompraM;
+
+public class CompraG {
+	CompraM compraM;
+	public CompraG(){
+		compraM = new CompraM();
+	}
+	public ArrayList<ListaTicket> ListarTicket(){
+ 		return compraM.ListarTicket();
+	}
+	public ArrayList<ListaFactura> ListarFactura(){
+		return compraM.ListarFactura();
+	}
+}

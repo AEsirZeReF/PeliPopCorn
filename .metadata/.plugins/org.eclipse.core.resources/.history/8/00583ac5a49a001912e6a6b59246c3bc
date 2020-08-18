@@ -1,0 +1,20 @@
+package Interfaces;
+
+import Class.Cliente;
+import Class.Peliculas;
+
+public interface ClienteInterface {
+	
+	public int InsertCliente(Cliente cliente);
+	
+	public int UpdateCliente (Cliente cliente);
+	
+	//public int Eliminar(Cliente cliente);
+	
+	
+	//tb_peliculas
+	
+	
+	
+
+}

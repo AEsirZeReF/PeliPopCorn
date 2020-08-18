@@ -1,0 +1,303 @@
+drop database DBPELIPOPCORN;
+CREATE DATABASE DBPELIPOPCORN;
+USE DBPELIPOPCORN;
+CREATE TABLE CLASIFICACIONPELICULA(
+IDCLASIFICACION int PRIMARY KEY auto_increment  NOT NULL,
+DETALLE_CLASIFICACION VARCHAR (100)
+);
+/*-------------*/
+CREATE TABLE TIPOSALA(
+IDTIPOSALA int PRIMARY KEY auto_increment not null,
+TIPOSALA VARCHAR (100)
+);
+/*-----*/
+CREATE TABLE CLIENTE(
+IDCLIENTE int PRIMARY KEY auto_increment not null,
+NOMBRE VARCHAR (100) NOT NULL,
+APELLIDO VARCHAR (100) NOT NULL,
+EDAD INT NOT NULL
+);
+/*-----*/
+CREATE TABLE SALA(	
+IDSALA int PRIMARY KEY auto_increment not null,
+IDTIPOSALA int not null ,
+butacas INT NOT NULL,
+foreign key (IDTIPOSALA) references TIPOSALA(IDTIPOSALA)
+);
+/*---------------*/
+CREATE TABLE PELICULA(
+IDPELICULA int PRIMARY KEY auto_increment not null,
+IDCLASIFICACION int not null,
+NOMBRE VARCHAR (100) NOT NULL,
+Genero varchar(100) not null,
+DESCRIP_PELICULA VARCHAR(150) not null,
+DURACION varchar(100) not null,
+FECHA_ESTRENO VARCHAR (100) not NULL,
+foreign key (IDCLASIFICACION) REFERENCES  CLASIFICACIONPELICULA(IDCLASIFICACION) 
+);
+CREATE TABLE BOCADOS(
+IDBOCADO int PRIMARY KEY auto_increment not null,
+NOMBRE_BOCADO VARCHAR(100) not null,
+DESCRIP_BOCADO VARCHAR(100) not null,
+PRECIO_BOCADO DECIMAL(9,2) not null
+);
+CREATE TABLE PROYECCIONES(
+IDPROYECCION int PRIMARY KEY auto_increment not null,
+IDSALA int not null,
+IDPELICULA int NOT NULL,
+HORA VARCHAR (100) NOT NULL,
+precio decimal(9,2) not null,
+FOREIGN KEY (IDSALA) REFERENCES SALA(IDSALA),
+FOREIGN KEY (IDPELICULA) REFERENCES PELICULA(IDPELICULA)
+);
+/*---------*/
+CREATE TABLE Ticket(
+idTicket int  PRIMARY KEY auto_increment not null,
+IDCLIENTE int not null,
+idproyeccion int not null,
+FECHA timestamp  default current_timestamp on update current_timestamp,
+cantidad int not null,
+foreign key (IDCLIENTE) REFERENCES CLIENTE(IDCLIENTE),
+foreign key  (idproyeccion) references proyecciones(idproyeccion)
+);
+
+CREATE TABLE FACTURA(
+IDFACTURA int PRIMARY KEY auto_increment not null,
+IDCLIENTE int  not null,
+idbocado int not null,
+FECHA timestamp  default current_timestamp on update current_timestamp,
+cantidad int not null,
+FOREIGN KEY (IDCLIENTE) REFERENCES CLIENTE (IDCLIENTE),
+FOREIGN KEY  (idbocado) references bocados (idbocado)
+);
+INSERT INTO CLASIFICACIONPELICULA(DETALLE_CLASIFICACION) VALUES
+('APT'),
+('+14'),
+('+18');
+INSERT INTO TIPOSALA(TIPOSALA) VALUES
+('2D'),
+('3D'),
+( 'INTERACTIVO');
+INSERT INTO SALA(IDTIPOSALA,butacas) VALUES 
+(1,100),
+(1, 150),
+(2, 100),
+(2,150),
+(3,100),
+(3,150);
+/************************* Peliculas ************************************/
+/*  --- actualizar ---- */
+delimiter @@
+	create procedure ListarClasificacion()
+    begin 
+		select detalle_clasificacion from CLASIFICACIONPELICULA;
+    end @@
+delimiter ;
+delimiter @@
+	create procedure ActualizarPelicula(
+    nombre varchar(100),idClasificacion int ,genero varchar(100),descripcion varchar(100),duracion varchar(100) ,fecha varchar(100),id int)
+    begin
+		update pelicula set 
+							nombre = nombre,
+							idclasificacion = idClasificacion,
+							genero = genero,
+							DESCRIP_PELICULA=descripcion,
+							DURACION = duracion,
+							FECHA_ESTRENO = fecha where IDPELICULA = id;
+    end @@
+delimiter ;
+/*  --- insertar ---- */
+delimiter @@
+	create procedure AgregarPelicula(
+    idClasificacion int ,nombre varchar(100),genero varchar(100),
+    descripcion varchar(100),duracion varchar(100) ,fecha varchar(100)
+    )
+    begin
+		insert into PELICULA(IDCLASIFICACION,NOMBRE,Genero,DESCRIP_PELICULA,
+									DURACION,FECHA_ESTRENO)
+		values (idClasificacion,nombre,genero,descripcion,duracion,fecha);
+    end @@
+delimiter ;
+
+insert into PELICULA(IDCLASIFICACION,NOMBRE,Genero,DESCRIP_PELICULA,DURACION,FECHA_ESTRENO)
+		values (1,'Avengers','Ficción','la pelea por salvar el mundo','190 minutos','25 de abril del 2019'),
+				(2,'Mi villano Faborito','Animacion','Sigue la historia de crud','110 minutos','2 de abril del 2019');
+/*------ listar ---------*/
+delimiter @@
+	create procedure ListarPeliculas()
+    begin
+		select t1.idpelicula,t1.idclasificacion,t1.nombre,t1.genero,t1.descrip_pelicula,t1.duracion,t1.fecha_Estreno,t2.detalle_clasificacion 
+		from pelicula t1 inner join CLASIFICACIONPELICULA t2 on t1.idclasificacion=t2.idclasificacion order by t1.idpelicula;
+    end @@
+delimiter ;
+
+/*------ Eliminar ---------*/
+delimiter @@
+	create procedure EliminarPelicula(cod int)
+    begin
+		delete from pelicula where idpelicula = cod;
+    end @@
+delimiter ;
+/************************* Proyeccion ************************************/
+/******* Eliminar **********/
+delimiter @@
+	create procedure EliminarProyeccion(cod int)
+		begin
+			delete from proyecciones where IDPROYECCION= cod;
+        end @@
+delimiter ;
+delimiter @@
+	create procedure AgregarProyecciones(
+		IDSALA int ,IDPELICULA int ,hora varchar(100),precio decimal(9,2))
+        begin
+		insert into proyecciones (idsala,idpelicula,hora,precio) values (IDSALA,idpelicula,hora,precio);
+        end @@
+delimiter ;
+call agregarproyecciones(1,1,'20:20 pm 02/02/2019',20.33);
+call agregarproyecciones(6,2,'20:20 pm 12/02/2019',15.99);
+call agregarproyecciones(2,1,'11:20 pm 12/02/2019',15.99);
+call agregarproyecciones(4,2,'12:20 pm 12/02/2019',15.99);
+/********* actualizar *********/
+delimiter @@
+	create procedure ActualizarProyecciones(
+		IDSALA int ,IDPELICULA int ,hora varchar(100),precio decimal(9,2),cod int)
+        begin 
+			update proyecciones set IDSALA=IDSALA,IDPELICULA=IDPELICULA,hora=hora,precio=precio where IDPROYECCION=cod;
+        end @@
+delimiter 
+/****** ListarProyecciones **********/
+delimiter @@
+	create procedure ListarProyecciones()
+		begin 
+			select t3.IDPROYECCION,t3.precio,t2.IDSALA,t2.butacas,t1.TIPOSALA,t4.IDPELICULA,t4.nombre,t3.HORA from tiposala t1 inner join sala t2 on t1.IDTIPOSALA=t2.IDTIPOSALA
+			inner join proyecciones t3 on t2.IDSALA=t3.IDSALA inner join pelicula t4
+			on t3.IDPELICULA = t4.IDPELICULA order by t3.IDPROYECCION;
+        end @@
+delimiter ;
+delimiter @@
+	create procedure ListarSalas()
+    begin
+		select t1.IDSALA,t1.butacas,t2.TIPOSALA from  sala t1 inner join tiposala t2 on t1.IDTIPOSALA=t2.IDTIPOSALA
+        order by t1.IDSALA;
+    end @@
+delimiter ;
+/* -----------------*/
+delimiter @@
+	create procedure ListarElegirPeliculasPeliculas()
+    begin 
+		select t1.IDPELICULA,t1.NOMBRE from pelicula t1 order by t1.IDPELICULA;
+    end @@
+delimiter ;
+/************************************* Bocados ****************************/
+/******** Agregar ************/
+delimiter @@
+	create procedure AgregarBocado(
+		NOMBRE_BOCADO varchar(100),DESCRIP_BOCADO varchar(100),PRECIO_BOCADO DECIMAL(9,2))
+	begin
+		INSERT INTO BOCADOS (NOMBRE_BOCADO,DESCRIP_BOCADO,PRECIO_BOCADO) 
+        VALUES (NOMBRE_BOCADO,DESCRIP_BOCADO,PRECIO_BOCADO);
+    end @@
+delimiter ;
+call agregarbocado('combo personla','es una cancha grande',29.99);
+call agregarbocado('combo Gigante','Trae un chaufa',59.99);
+/******** Actualizar ************/
+delimiter @@
+	create procedure ActualizarBocado(NOMBRE_BOCADO varchar(100),DESCRIP_BOCADO varchar(100),PRECIO_BOCADO DECIMAL(9,2),cod int)
+	begin
+    
+		update bocados set NOMBRE_BOCADO=NOMBRE_BOCADO,DESCRIP_BOCADO=DESCRIP_BOCADO,PRECIO_BOCADO=PRECIO_BOCADO where IDBOCADO=cod;
+    end @@
+delimiter ;
+/************ Eliminar ****************/
+delimiter @@
+	create procedure EliminarBocado(cod int)
+    begin
+		delete from bocados where IDBOCADO = cod;
+    end @@
+delimiter ;
+/************ Eliminar ****************/
+delimiter @@
+	create procedure ListarBocados()
+		begin
+			select * from bocados order by IDBOCADO;
+        end @@
+delimiter ;
+/***************** CLIENTE **************************/
+/******* agregar ******/
+delimiter @@
+	create procedure AgregarCliente(nom varchar(100),ape varchar(100),edad int)
+		begin
+			insert into cliente (nombre,apellido,edad) values (nom,ape,edad);
+        end @@
+delimiter ;
+call agregarcliente('carlos','berdejo',16);
+call agregarcliente('Juanchin','Tongo',20);
+/******** actualizar *********/
+delimiter @@
+	create procedure ActualizarCliente(nom varchar(100),ape varchar(100),edad int,id int)
+		begin	
+			update cliente set nombre =nom,apellido =ape,edad=edad where idcliente = id;
+        end @@
+delimiter ;
+/********* listar **************/
+delimiter @@
+	create procedure ListarCliente()
+		begin
+			select * from cliente;
+        end @@
+delimiter ;
+/********** eliminar ******************/
+delimiter @@
+	create procedure EliminarCliente(cod int)
+		begin
+			delete from cliente where idcliente = cod;
+        end @@
+delimiter ;
+/***************************** Comprar Ticket ***********************/
+delimiter @@
+	create procedure ComprarTicket(cliente int,proyeccion int,cantidad int)
+		begin
+			insert into ticket (idcliente,idproyeccion,cantidad) values (cliente,proyeccion,cantidad);
+        end @@
+delimiter ;
+call ComprarTicket(2,2,2);
+call ComprarTicket(1,2,2);
+
+delimiter @@
+	create procedure ListarComprarTicket()
+		begin
+			select t2.idticket, t6.nombre,t4.idsala,t5.tiposala,t3.hora,
+			concat_ws(' ',t1.nombre,t1.apellido) as cliente,
+			t3.precio,t2.cantidad,
+			(t2.cantidad*t3.precio) as subTotal ,t2.fecha
+			from cliente t1 inner join ticket t2 
+			on t1.idcliente=t2.idcliente inner join proyecciones t3
+			on t2.idproyeccion=t3.idproyeccion inner join sala t4
+			on t3.idsala=t4.idsala inner join tiposala t5
+			on t4.idtiposala=t5.idtiposala inner join pelicula t6
+			on t3.idpelicula=t6.idpelicula inner join clasificacionpelicula t7
+			on t6.idclasificacion=t7.idclasificacion order by t2.idticket;
+        end @@
+delimiter ;
+delimiter @@
+	create procedure GenerarTicketyFactura(cliente int,proyeccion int,cantidad int,bocado int,cantboca int)
+		begin
+			insert into ticket (idcliente,idproyeccion,cantidad) values (cliente,proyeccion,cantidad);
+            insert into factura(idcliente,idbocado,cantidad) values (cliente,bocado,cantboca); 
+        end @@
+delimiter ;
+call GenerarTicketyFactura(1,1,20,1,50);
+call GenerarTicketyFactura(2,1,20,1,50);
+call GenerarTicketyFactura(1,2,20,1,50);
+delimiter @@
+	create procedure ListarGenerarFactura()
+		begin
+			select t2.idfactura,concat_ws(' ',t1.nombre,t1.apellido) as Nombres,
+			t3.nombre_bocado,t3.precio_bocado,t2.cantidad,
+			(t3.precio_bocado*t2.cantidad) as Subtotal,
+			t2.fecha
+			from cliente t1 inner join factura t2 
+			on t1.idcliente=t2.idcliente inner join bocados t3
+			on t2.idbocado=t3.idbocado;
+        end @@
+delimiter ;

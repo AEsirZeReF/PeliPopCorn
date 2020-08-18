@@ -1,0 +1,38 @@
+package Cheats;
+
+import java.awt.ScrollPane;
+
+import javax.swing.JPanel;
+
+public class MoverIzquierdaTable extends Thread{
+	private ScrollPane scroll;
+	private int  inicio;
+	private int fin;
+	private int tiempo;
+	private int ancho;
+	private int alto;
+	
+	public MoverIzquierdaTable(ScrollPane scroll, int inicio, int fin, int tiempo,int ancho,int alto){
+		this.scroll = scroll;
+		this.inicio = inicio;
+		this.fin = fin;
+		this.tiempo = tiempo;
+		this.ancho = ancho;
+		this.alto = alto;
+	}
+	@Override
+	public void run(){
+		try {	
+			for (int i = inicio; i >= fin; i-=4) {
+				scroll.setBounds(scroll.getBounds().getX(), i, scroll.getBounds().getWidth(), scroll.getBounds().getHeight());
+				//panel.setBounds(arg0, arg1, arg2, arg3);
+				//System.out.println(panel.getBounds());
+				Thread.sleep(tiempo);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

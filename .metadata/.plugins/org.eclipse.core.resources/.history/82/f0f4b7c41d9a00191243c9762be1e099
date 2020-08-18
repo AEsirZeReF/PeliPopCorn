@@ -1,0 +1,234 @@
+package Views;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import Cheats.Cheats;
+import Class.Pelicula;
+
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+public class PeliculasView extends JDialog implements MouseListener, ActionListener,Runnable {
+
+	private final JPanel PeliculasPanel = new JPanel();
+	private JLabel lblPeliculas;
+	private JLabel FondoPeliclas;
+	private JLabel lblNombreDePelicula;
+	private JLabel lblDuracionPelicula;
+	private JLabel lblClasificacinDePelicula;
+	private JTextField txtNombrePelicula;
+	private JTextField txtDuracionPelicula;
+	private JComboBox cboClasificacionPelicula;
+	private JLabel lblDescripcinDePelicula;
+	private JScrollPane scrollPane;
+	private JTextArea txtDescripcionPelicula;
+	private JLabel btnAgregarPelicula;
+	private JLabel lblAgregarPelicula;
+	private JLabel lblActualizarPelicula;
+	private JLabel btnActualizarPelicula;
+	/**
+	 * Launch the application.
+	 */
+	Cheats cheats = new Cheats();
+	Pelicula pelicula = new Pelicula();
+	PeliculaMantenimiento peliculaMantenimiento = new PeliculaMantenimiento();
+	private JLabel btnClose;
+	
+	public static void main(String[] args) {
+		PeliculasView dialog = new PeliculasView();
+		Thread hilo = new Thread(dialog);
+		hilo.start();
+		/*try {
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+	}
+
+	/**
+	 * Create the dialog.
+	 * 
+	 */
+	
+	
+	public PeliculasView() {
+		setUndecorated(true);
+		setBounds(200, 200, 836, 472);
+		getContentPane().setLayout(new BorderLayout());
+		PeliculasPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(PeliculasPanel, BorderLayout.CENTER);
+		PeliculasPanel.setLayout(null);
+		
+		btnClose = new JLabel("");
+		btnClose.addMouseListener(this);
+		btnClose.setIcon(new ImageIcon("D:\\PeliPopCorn-v9\\Proyecto PeliPopCorp\\Img\\close.png"));
+		btnClose.setBounds(794, 11, 32, 32);
+		PeliculasPanel.add(btnClose);
+		
+		lblNombreDePelicula = new JLabel("Nombre de Pelicula");
+		lblNombreDePelicula.setForeground(Color.RED);
+		lblNombreDePelicula.setFont(new Font("Trajan Pro", Font.BOLD | Font.ITALIC, 16));
+		lblNombreDePelicula.setBounds(90, 117, 279, 49);
+		PeliculasPanel.add(lblNombreDePelicula);
+		
+		lblPeliculas = new JLabel("Agregar Nuevas Peliculas  al Catalogo");
+		lblPeliculas.setForeground(Color.RED);
+		lblPeliculas.setFont(new Font("Tempus Sans ITC", Font.ITALIC, 29));
+		lblPeliculas.setBounds(225, 37, 520, 58);
+		PeliculasPanel.add(lblPeliculas);
+		
+		lblDuracionPelicula = new JLabel("Duracion de Pelicula");
+		lblDuracionPelicula.setForeground(Color.RED);
+		lblDuracionPelicula.setFont(new Font("Trajan Pro", Font.BOLD | Font.ITALIC, 16));
+		lblDuracionPelicula.setBounds(90, 177, 279, 49);
+		PeliculasPanel.add(lblDuracionPelicula);
+		
+		lblClasificacinDePelicula = new JLabel("Clasificación de Pelicula");
+		lblClasificacinDePelicula.setForeground(Color.RED);
+		lblClasificacinDePelicula.setFont(new Font("Trajan Pro", Font.BOLD | Font.ITALIC, 16));
+		lblClasificacinDePelicula.setBounds(90, 237, 279, 49);
+		PeliculasPanel.add(lblClasificacinDePelicula);
+		
+		txtNombrePelicula = new JTextField();
+		txtNombrePelicula.setBounds(380, 122, 246, 29);
+		PeliculasPanel.add(txtNombrePelicula);
+		txtNombrePelicula.setColumns(10);
+		
+		txtDuracionPelicula = new JTextField();
+		txtDuracionPelicula.setBounds(380, 177, 246, 29);
+		PeliculasPanel.add(txtDuracionPelicula);
+		txtDuracionPelicula.setColumns(10);
+		
+		cboClasificacionPelicula = new JComboBox();
+		cboClasificacionPelicula.setBounds(380, 238, 246, 29);
+		PeliculasPanel.add(cboClasificacionPelicula);
+		
+		lblDescripcinDePelicula = new JLabel("Descripción de Pelicula");
+		lblDescripcinDePelicula.setForeground(Color.RED);
+		lblDescripcinDePelicula.setFont(new Font("Trajan Pro", Font.BOLD | Font.ITALIC, 16));
+		lblDescripcinDePelicula.setBounds(90, 297, 279, 49);
+		PeliculasPanel.add(lblDescripcinDePelicula);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(380, 314, 246, 49);
+		PeliculasPanel.add(scrollPane);
+		
+		txtDescripcionPelicula = new JTextArea();
+		scrollPane.setViewportView(txtDescripcionPelicula);
+		
+		btnAgregarPelicula = new JLabel("");
+		btnAgregarPelicula.addMouseListener(this);
+		btnAgregarPelicula.setIcon(new ImageIcon("C:\\Users\\EDINSON\\Desktop\\PeliPopCorn-v8\\Proyecto PeliPopCorp\\Img\\completado.png"));
+		btnAgregarPelicula.setBounds(793, 101, 33, 33);
+		PeliculasPanel.add(btnAgregarPelicula);
+		
+		lblAgregarPelicula = new JLabel("Agregar Pelicula");
+		lblAgregarPelicula.setForeground(Color.RED);
+		lblAgregarPelicula.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAgregarPelicula.setBounds(655, 106, 128, 23);
+		PeliculasPanel.add(lblAgregarPelicula);
+		
+		lblActualizarPelicula = new JLabel("Actualizar Pelicula");
+		lblActualizarPelicula.setForeground(Color.RED);
+		lblActualizarPelicula.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblActualizarPelicula.setBounds(655, 150, 128, 23);
+		PeliculasPanel.add(lblActualizarPelicula);
+		
+		btnActualizarPelicula = new JLabel("");
+		btnActualizarPelicula.setIcon(new ImageIcon("C:\\Users\\EDINSON\\Desktop\\PeliPopCorn-v8\\Proyecto PeliPopCorp\\Img\\completado.png"));
+		btnActualizarPelicula.setBounds(793, 145, 33, 33);
+		PeliculasPanel.add(btnActualizarPelicula);
+		
+		FondoPeliclas = new JLabel("");
+		FondoPeliclas.setIcon(new ImageIcon("D:\\PeliPopCorn-v9\\Proyecto PeliPopCorp\\Img\\randon3.png"));
+		FondoPeliclas.setBounds(0, 0, 836, 472);
+		PeliculasPanel.add(FondoPeliclas);
+		
+	}
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getSource() == btnClose) {
+			mouseClickedBtnClose(arg0);
+		}
+		if (arg0.getSource() == btnAgregarPelicula) {
+			mouseClickedBtnAgregarPelicula(arg0);
+		}
+	}
+	public void mouseEntered(MouseEvent arg0) {
+	}
+	public void mouseExited(MouseEvent arg0) {
+	}
+	public void mousePressed(MouseEvent arg0) {
+	}
+	public void mouseReleased(MouseEvent arg0) {
+	}
+	public void actionPerformed(ActionEvent arg0) {
+	}
+	
+	protected void mouseClickedBtnAgregarPelicula(MouseEvent arg0) {
+		if(cheats.ValidarTxt(txtNombrePelicula.getText(), "[A-Z]{1}+[a-z]{5,20}")){
+		if (cheats.ValidarTxt(txtDuracionPelicula.getText(),"[0-9]{3}+min")) {
+			if(cheats.ValidarTxt(txtDescripcionPelicula.getText(),".{1,150}")){
+				//codigo
+				
+				pelicula.setNombrePelicula(txtNombrePelicula.getText());
+				pelicula.setDuracionPelicula(Integer.parseInt(txtDuracionPelicula.getText()));
+				//pelicula.setIdClasificacion();
+				pelicula.setDescripcionPelicula(txtDescripcionPelicula.getText());
+				int numero  = peliculaMantenimiento.InsertPeliculas(pelicula);
+				
+				if (numero == 0) {
+					System.out.println("error el el ingreso de datos");
+				}else {
+					cheats.Mensaje("pelicula insertada");
+				}
+			}else {
+				cheats.Mensaje("Excediste el numero de caracteres");
+			}
+		}else {
+			cheats.Mensaje("Datos mal duracion");
+		}
+	}
+	else {
+		cheats.Mensaje("Datos mal de nombre");
+	}
+	}
+
+	@Override
+	public void run() {
+		try {
+			this.setVisible(true);
+			this.setLocationRelativeTo(null);
+			double opacity = 0.1;
+			while(opacity < 1.0){
+				this.setOpacity((float) opacity);
+				opacity += 0.1;
+				Thread.sleep(50);
+			}
+			//Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	protected void mouseClickedBtnClose(MouseEvent arg0) {
+		this.dispose();
+	}
+}

@@ -1,0 +1,40 @@
+package Class;
+
+public class Compra {
+	private int idTicket;
+	private int idCliente;
+	private int idProyeccion;
+	private String fechaTicket;
+	private int cantidadTicket;
+	private int idFactura;
+	private int idBocado;
+	private String fechaBocado;
+	private int cantidadBocado;
+	
+	public Compra(){
+		
+	}
+	public Compra(int idTicket,int idCliente,int idProyeccion,String fechaTicket,int cantidadTicket){
+		this.idTicket= idTicket;
+		this.idCliente = idCliente;
+		this.idProyeccion = idProyeccion;
+		this.fechaTicket = fechaTicket;
+		this.cantidadTicket=cantidadTicket;
+	}
+	public Compra(int idTicket,int idCliente,int idProyeccion,String fechaTicket,int cantidadTicket
+			,int idFactura,int idBocado,String fechaBocado,int cantidadBocado){
+		this.idTicket = idTicket;
+		this.idCliente = idCliente;
+		this.idProyeccion = idProyeccion;
+		this.fechaTicket = fechaTicket;
+		this.cantidadTicket = cantidadTicket;
+		this.idFactura = idFactura;
+		this.idBocado = idBocado;
+		this.fechaBocado = fechaBocado;
+		this.cantidadBocado = cantidadBocado;
+		
+	}
+	
+	
+
+}

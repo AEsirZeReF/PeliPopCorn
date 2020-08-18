@@ -1,0 +1,150 @@
+package Views;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import Mantenimientos.UsuarioGestion;
+
+
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+
+public class Index extends JFrame implements ActionListener {
+
+	private JPanel contentPane;
+	private JLabel lblPelipopcorn;
+	private JLabel lblMenu;
+	private JLabel lblPeliculas;
+	private JLabel lblContenido;
+	private JLabel lblCabezera;
+	private JButton btnPeliculas;
+	private JButton btnSalas;
+	private JButton btnBebidasYBocadillos;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Index frame = new Index();
+					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Index() {
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 500, 700);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		lblPelipopcorn = new JLabel("PeliPopCorn");
+		lblPelipopcorn.setBounds(155, 0, 306, 76);
+		lblPelipopcorn.setFont(new Font("Tahoma", Font.BOLD, 50));
+		lblPelipopcorn.setForeground(Color.WHITE);
+		lblPelipopcorn.setBackground(Color.GRAY);
+		contentPane.add(lblPelipopcorn);
+		
+		lblPeliculas = new JLabel("Mantenimento");
+		lblPeliculas.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPeliculas.setBounds(62, 87, 100, 17);
+		contentPane.add(lblPeliculas);
+		
+		lblContenido = new JLabel("");
+		lblContenido.setIcon(new ImageIcon("img/deku y kachann.jpg"));
+		lblContenido.setBounds(196, 76, 408, 340);
+		contentPane.add(lblContenido);
+		
+		btnPeliculas = new JButton("Peliculas");
+		btnPeliculas.addActionListener(this);
+		btnPeliculas.setBounds(10, 137, 127, 23);
+		contentPane.add(btnPeliculas);
+		
+		btnSalas = new JButton("Salas");
+		btnSalas.setBounds(10, 182, 127, 23);
+		contentPane.add(btnSalas);
+		
+		btnBebidasYBocadillos = new JButton("Bebidas y Bocadillos");
+		btnBebidasYBocadillos.setBounds(10, 227, 127, 23);
+		contentPane.add(btnBebidasYBocadillos);
+		
+		lblMenu = new JLabel("");
+		lblMenu.setIcon(new ImageIcon("img/horizon.jpg"));
+		lblMenu.setBounds(0, 76, 186, 595);
+		contentPane.add(lblMenu);
+		
+		lblCabezera = new JLabel("");
+		lblCabezera.setIcon(new ImageIcon("img/horizon.jpg"));
+		lblCabezera.setBackground(Color.DARK_GRAY);
+		lblCabezera.setBounds(0, 0, 642, 76);
+		contentPane.add(lblCabezera);
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnPeliculas) {
+			actionPerformedBtnPeliculas(e);
+		}
+	}
+	protected void actionPerformedBtnPeliculas(ActionEvent e) {
+		Peliculas peliculas = new Peliculas();
+		peliculas.setVisible(true);
+		peliculas.setLocationRelativeTo(null);
+	
+	}
+}
+/*guardar
+ * Usuario usuario = new Usuario();
+			usuario.setId(Integer.parseInt(txtId.getText()));
+			usuario.setNombre(txtNombre.getText());
+			usuario.setApellido(txtApellido.getText());
+			//
+			UsuarioGestion usuGes = new UsuarioGestion();
+			int ok = usuGes.Registrar(usuario);
+			
+			
+			 txtArea.setText(usuario.getId()+"\n"+usuario.getNombre());
+			
+			if (ok == 0) {
+				System.out.println("error");
+			}else {
+				System.out.println("Registro ok");
+			}*/
+/*UpDate
+ * Usuario usu = new Usuario();
+		usu.setId(Integer.parseInt(txtId.getText()));
+		usu.setNombre(txtNombre.getText());
+		usu.setApellido(txtApellido.getText());
+		
+		UsuarioGestion usuGes = new UsuarioGestion();
+		int ok = usuGes.Update(usu);
+		 txtArea.setText(usu.getId()+"\n"+usu.getNombre());
+			
+			if (ok == 0) {
+				System.out.println("error");
+			}else {
+				System.out.println("Registro ok");
+			}*/

@@ -1,0 +1,114 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Bocados;
+import Class.Proyecciones;
+import Utils.MySQLConexion;
+
+public class BocadosM {
+	private Connection con;
+	private CallableStatement call;
+	private ArrayList<Bocados> listaBocados;
+	private int rs;
+	private ResultSet res;
+	MySQLConexion mysql;
+	
+	public BocadosM(){
+		mysql = new MySQLConexion();
+		con = mysql.getConection();
+	}
+	public ArrayList<Bocados> ListarBocados(){
+		listaBocados = new ArrayList<>();
+		try {
+			call = (CallableStatement) con.prepareCall("call ListarBocados()");
+			res = call.executeQuery();
+			while(res.next()){
+				Bocados bocados = new Bocados(res.getInt(1), res.getString(2), res.getString(3),res.getDouble(4));
+				listaBocados.add(bocados);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(con != null){
+					con.close();
+				}
+				if(call != null){
+					call.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return listaBocados;
+	}
+	public void AgregarBocados(Bocados bocados){
+		try {
+			call = (CallableStatement) con.prepareCall("call AgregarBocado(?,?,?)");
+			call.setString(1, bocados.getNombreBocado());
+			call.setString(2, bocados.getDescripcionBocado());
+			call.setDouble(3, bocados.getPrecioBocado());
+			rs = call.executeUpdate();
+			
+			JOptionPane.showMessageDialog(null, "Se acaba de agregar un bocado");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	public void EliminarBocado(int id){
+		try {
+			call = (CallableStatement) con.prepareCall("call EliminarBocado(?)");
+			call.setInt(1, id);
+			rs = call.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(con != null){
+					con.close();
+				}
+				if(call != null){
+					call.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void ActualizarBocados(Bocados bocados){
+		try {
+			call = (CallableStatement) con.prepareCall("call ActulizarBocados(?,?,?,?)");
+			call.setString(1, bocados.getNombreBocado());
+			call.setString(2, bocados.getDescripcionBocado());
+			call.setDouble(3, bocados.getPrecioBocado());
+			call.setInt(4, bocados.getIdBocado());
+			rs = call.executeUpdate();
+			
+			JOptionPane.showMessageDialog(null, "se actualizo el bocados");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(con != null){
+					con.close();
+				}
+				if(call != null){
+					call.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

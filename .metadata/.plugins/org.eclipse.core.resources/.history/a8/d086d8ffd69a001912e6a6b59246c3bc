@@ -1,0 +1,21 @@
+package Class;
+
+public class Bocado {
+	private String idBocado;
+	private String nombreBocado;
+	private String descripcionBocado;
+	private double precioBocado;
+	private int stockBocado;
+	
+	public Bocado(String idBocado,String nombreBocado,String descripcionBocado ,double precioBocado,int stockBocado){
+		this.idBocado = idBocado;
+		this.nombreBocado = nombreBocado;
+		this.descripcionBocado = descripcionBocado;
+		this.precioBocado = precioBocado;
+		this.stockBocado = stockBocado;
+	}
+
+	
+	
+
+}

@@ -1,0 +1,96 @@
+package Class;
+
+public class Peliculas {
+	
+	private int idPelicula;
+	private int idClasificacion;
+	private String nombreClasifica;
+	private String nombrePelicula;
+	private String generoPelicula;
+	private String descripcionPelicula;
+	private String duracionPelicula;
+	private String estrenoPelicula;
+	
+	public Peliculas() {
+		
+	}
+	public Peliculas(int idPeliculas,int idClasificacion,String nombrePelicula,
+			String generoPelicula,String descripcionPelicula,String duracionPelicula,
+			String estrenoPelicula) {
+		this.idPelicula = idPeliculas;
+		this.idClasificacion = idClasificacion;
+		this.nombrePelicula = nombrePelicula;
+		this.generoPelicula= generoPelicula;
+		this.descripcionPelicula = descripcionPelicula;
+		this.duracionPelicula = duracionPelicula;
+		this.estrenoPelicula = estrenoPelicula;
+	}
+	public Peliculas(int idPeliculas,int idClasificacion,String nombrePelicula,
+			String generoPelicula,String descripcionPelicula,String duracionPelicula,
+			String estrenoPelicula,String nombreClasifica) {
+		this.idPelicula = idPeliculas;
+		this.idClasificacion = idClasificacion;
+		this.nombrePelicula = nombrePelicula;
+		this.generoPelicula= generoPelicula;
+		this.descripcionPelicula = descripcionPelicula;
+		this.duracionPelicula = duracionPelicula;
+		this.estrenoPelicula = estrenoPelicula;
+		this.nombreClasifica = nombreClasifica;
+	}
+	
+	
+	public String getNombreClasifica() {
+		return nombreClasifica;
+	}
+	public void setNombreClasifica(String nombreClasifica) {
+		this.nombreClasifica = nombreClasifica;
+	}
+	public int getIdPelicula() {
+		return idPelicula;
+	}
+	public void setIdPelicula(int idPelicula) {
+		this.idPelicula = idPelicula;
+	}
+	public int getIdClasificacion() {
+		return idClasificacion;
+	}
+	public void setIdClasificacion(int idClasificacion) {
+		this.idClasificacion = idClasificacion;
+	}
+	public String getNombrePelicula() {
+		return nombrePelicula;
+	}
+	public void setNombrePelicula(String nombrePelicula) {
+		this.nombrePelicula = nombrePelicula;
+	}
+	public String getGeneroPelicula() {
+		return generoPelicula;
+	}
+	public void setGeneroPelicula(String generoPelicula) {
+		this.generoPelicula = generoPelicula;
+	}
+	public String getDescripcionPelicula() {
+		return descripcionPelicula;
+	}
+	public void setDescripcionPelicula(String descripcionPelicula) {
+		this.descripcionPelicula = descripcionPelicula;
+	}
+	public String getDuracionPelicula() {
+		return duracionPelicula;
+	}
+	public void setDuracionPelicula(String duracionPelicula) {
+		this.duracionPelicula = duracionPelicula;
+	}
+	public String getEstrenoPelicula() {
+		return estrenoPelicula;
+	}
+	public void setEstrenoPelicula(String estrenoPelicula) {
+		this.estrenoPelicula = estrenoPelicula;
+	}
+	
+	
+	
+	
+	
+
+}

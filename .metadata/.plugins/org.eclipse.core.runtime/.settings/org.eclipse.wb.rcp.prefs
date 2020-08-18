@@ -1,0 +1,3 @@
+codeGeneration.variableId=org.eclipse.wb.core.model.variable.fieldUnique
+eclipse.preferences.version=1
+stubName=${event_name}${Component_name}

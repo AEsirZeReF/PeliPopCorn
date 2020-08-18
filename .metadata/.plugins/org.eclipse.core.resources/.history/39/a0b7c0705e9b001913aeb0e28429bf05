@@ -1,0 +1,66 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Cliente;
+import Class.Peliculas;
+import Utils.MySQLConexion;
+
+public class ClienteM {
+	private Connection con;
+	private CallableStatement call;
+	private ArrayList<Cliente> listaCliente;
+	private int rs;
+	private ResultSet res;
+	MySQLConexion mysql;
+	
+	public ClienteM(){
+		
+		mysql = new MySQLConexion();
+	}
+	public void AgregarCliente(Cliente cliente){
+		try {
+			con = mysql.getConection();
+			call = (CallableStatement) con.prepareCall("call AgregarCliente(?,?,?)");
+			call.setString(1, cliente.getNombreCliente());
+			call.setString(2, cliente.getApellidoCliente());
+			call.setInt(3, cliente.getEdadCliente());
+			rs = call.executeUpdate();
+			
+			JOptionPane.showMessageDialog(null, "se agrego un nuevo cliente");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try{
+				if(con != null){
+					con.close();
+				}
+				if(call != null){
+					call.close();
+				}
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	public ArrayList<Cliente> ListarCliente(){
+		listaCliente = new ArrayList<>();
+		try {
+			con = mysql.getConection();
+			call = (CallableStatement) con.prepareCall("call ListarCliente()");
+			res = call.exu
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+}

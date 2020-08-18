@@ -1,0 +1,97 @@
+package Mantenimientos;
+
+
+import java.sql.PreparedStatement;
+
+import com.mysql.jdbc.Connection;
+
+import Class.Cliente;
+import Class.Peliculas;
+import Interfaces.ClienteInterface;
+import Utils.MySQLConexion;
+
+public class ClienteMantenimiento implements ClienteInterface{
+	
+	
+	@Override
+	public int InsertCliente(Cliente cliente) {
+		int resultado = 0;
+		
+		Connection conexion = null;
+		PreparedStatement preparacionDeclaracion = null;
+		
+		try {
+			conexion = MySQLConexion.getConection();
+			
+			String consulta = "INSERT INTO CLIENTE VALUES(?,?,?,?,?,?)";
+			
+			preparacionDeclaracion = conexion.prepareStatement(consulta);
+			//parametros
+			
+			preparacionDeclaracion.setInt(1, cliente.getIdCliente());
+			preparacionDeclaracion.setString(4, cliente.getNombreCliente());
+			preparacionDeclaracion.setString(5, cliente.getApellidoCliente());
+			preparacionDeclaracion.setInt(6, cliente.getEdadCliente());
+			
+			resultado  = preparacionDeclaracion.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("Error de sentencia:  "+ e.getMessage());
+		}finally {
+			try {
+				if (preparacionDeclaracion != null) {
+					preparacionDeclaracion.close();
+				}
+				if (conexion != null) {
+					conexion.close();
+				}
+			} catch (Exception e2) {
+				System.out.println("Error al Cerrar");
+			}
+		}
+		
+		
+		return resultado;
+		
+	}
+	
+	@Override
+	public int UpdateCliente(Cliente cliente) {
+		int resultado = 0;
+		
+		Connection  conexion = null;
+		PreparedStatement preparacionDeclaracion = null;
+		try {
+			conexion = MySQLConexion.getConection(); 
+			String consulta = "UPDATE CLIENTE SET nombre = ?,apellido = ?, where idCliente = ?";
+			
+			preparacionDeclaracion = conexion.prepareStatement(consulta);
+			
+			//preparacionDeclaracion.setString(1, cliente.getNombre());
+			//preparacionDeclaracion.setString(2, cliente.getApellido());
+			//preparacionDeclaracion.setInt(3, cliente);;
+			
+			resultado = preparacionDeclaracion.executeUpdate();
+		} catch(Exception e){
+			System.out.println("Error de sentecion  "+ e.getMessage());
+		}finally {
+			try {
+				if (preparacionDeclaracion != null) {
+					preparacionDeclaracion.close();
+				}
+				if (conexion != null) {
+					conexion.close();
+				}
+			} catch (Exception e2) {
+				System.out.println("error al cerrar");
+			}
+		}
+		
+		
+		return resultado;
+		
+	}
+	
+	
+
+}

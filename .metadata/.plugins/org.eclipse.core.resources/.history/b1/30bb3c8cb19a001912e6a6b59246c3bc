@@ -1,0 +1,42 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Proyecciones;
+import Utils.MySQLConexion;
+
+public class ProyeccionesM {
+	private Connection con;
+	private CallableStatement call;
+	private ArrayList<Proyecciones> listaPeliculas;
+	private int rs;
+	private ResultSet result;
+	MySQLConexion mysql;
+	
+	public ProyeccionesM(){
+		
+		mysql = new MySQLConexion();
+		con = mysql.getConection();
+	}
+	public void AgregarPeliculas(Proyecciones proyecciones){
+		try {
+			
+			call = (CallableStatement) con.prepareCall("call AgregarProyecciones(?,?,?)");
+			call.setInt(1, proyecciones.getIdSala());
+			call.setInt(2, proyecciones.getIdPelicula());
+			call.setString(3, proyecciones.getHora());
+			rs = call.executeUpdate();
+			
+			JOptionPane.showMessageDialog(null, "Se agrego una nueva proyeccion");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+}

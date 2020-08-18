@@ -1,0 +1,70 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Proyecciones;
+import Utils.MySQLConexion;
+
+public class ProyeccionesM {
+	private Connection con;
+	private CallableStatement call;
+	private ArrayList<Proyecciones> listaPeliculas;
+	private int rs;
+	private ResultSet result;
+	MySQLConexion mysql;
+	
+	public ProyeccionesM(){
+		
+		mysql = new MySQLConexion();
+		con = mysql.getConection();
+	}
+	public void AgregarProyecciones(Proyecciones proyecciones){
+		try {
+			
+			call = (CallableStatement) con.prepareCall("call AgregarProyecciones(?,?,?)");
+			call.setInt(1, proyecciones.getIdSala());
+			call.setInt(2, proyecciones.getIdPelicula());
+			call.setString(3, proyecciones.getHora());
+			rs = call.executeUpdate();
+			
+			JOptionPane.showMessageDialog(null, "Se agrego una nueva proyeccion");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	public void ActualizarProyecciones(Proyecciones proyecciones){
+		try {
+		//	call = con.prepareCall("")
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	public ArrayList<Proyecciones> ListarProyecciones(){
+		ArrayList<Proyecciones> listPro = new ArrayList<>();
+		try {
+			call = (CallableStatement) con.prepareCall("call ListarProyecciones()");
+			result = call.executeQuery();
+			while(result.next()){
+				Proyecciones pro = new Proyecciones(result.getInt(1), 
+													result.getInt(2), 
+													result.getInt(5), 
+													result.getString(7), 
+													result.getInt(3), 
+													result.getString(4), 
+													result.getString(6));
+				listPro.add(pro);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return listPro;
+	}
+}

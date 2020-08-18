@@ -1,0 +1,16 @@
+package Interfaces;
+
+import Class.Peliculas;
+import Mantenimientos.PeliculasM;
+
+public class PeliculasG {
+	PeliculasM pelicilasM;
+	
+	public PeliculasG(){
+		pelicilasM = new PeliculasM();
+	}
+	public void AgregarPelicuas(Peliculas peliculas){
+		pelicilasM.AgregarPeliculas(peliculas);
+	}
+
+}

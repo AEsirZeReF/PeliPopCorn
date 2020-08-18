@@ -1,0 +1,14 @@
+package Views;
+
+import javax.swing.JPanel;
+
+public class Peliculas_2_0 extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public Peliculas_2_0() {
+
+	}
+
+}

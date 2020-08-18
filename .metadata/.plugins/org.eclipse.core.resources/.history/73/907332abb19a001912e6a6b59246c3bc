@@ -1,0 +1,15 @@
+package Interfaces;
+
+import Class.Proyecciones;
+import Mantenimientos.ProyeccionesM;
+
+public class ProyeccionesG {
+	ProyeccionesM proyeccionesM;
+	
+	public ProyeccionesG(){
+		proyeccionesM = new ProyeccionesM();
+	}
+	public void AgregarPeliculas(Proyecciones proyecciones){
+		proyeccionesM.AgregarPeliculas(proyecciones);
+	}
+}

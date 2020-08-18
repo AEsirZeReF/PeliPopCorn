@@ -1,0 +1,21 @@
+package Interfaces;
+
+import java.util.ArrayList;
+
+import Class.Peliculas;
+import Mantenimientos.PeliculasM;
+
+public class PeliculasG {
+	PeliculasM pelicilasM;
+	
+	public PeliculasG(){
+		pelicilasM = new PeliculasM();
+	}
+	public void AgregarPelicuas(Peliculas peliculas){
+		pelicilasM.AgregarPeliculas(peliculas);
+	}
+	public ArrayList<Peliculas> ListarPeliculas(Peliculas peliculas){
+		return pelicilasM.ListarPeliculas(peliculas);
+	}
+
+}

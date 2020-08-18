@@ -1,0 +1,42 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Compra;
+import Class.ListaTicket;
+import Class.Proyecciones;
+import Utils.MySQLConexion;
+
+public class CompraM {
+	private Connection con;
+	private CallableStatement call;
+	private ArrayList<ListaTicket> listaCompraTicket;
+	private int rs;
+	private ResultSet res;
+	MySQLConexion mysql;
+	
+	public CompraM(){
+		
+		mysql = new MySQLConexion();
+	}
+	public ArrayList<ListaTicket> ListarTicket (Compra compra){
+		listaCompraTicket = new ArrayList<>();
+		try {
+			con = mysql.getConection();
+			call = (CallableStatement) con.prepareCall("call ListarComprarTicket()");
+			res = call.executeQuery();
+			while(res.next()){
+				ListaTicket lista = new ListaTicket(res.getInt(1),res.getString(2), res.getInt(3), res.getString(4), res.getString(5),
+						res.getString(6),res.getDouble(7), res.getInt(8), res.getDouble(9), res.getString(10));
+				listaCompraTicket.add(lista);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return listaCompraTicket;
+	}
+}

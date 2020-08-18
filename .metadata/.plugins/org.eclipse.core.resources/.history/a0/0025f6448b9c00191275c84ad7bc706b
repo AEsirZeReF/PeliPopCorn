@@ -1,0 +1,24 @@
+package Mantenimientos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import com.mysql.jdbc.CallableStatement;
+
+import Class.Proyecciones;
+import Utils.MySQLConexion;
+
+public class CompraM {
+	private Connection con;
+	private CallableStatement call;
+	private ArrayList<Proyecciones> listaProyecciones;
+	private int rs;
+	private ResultSet res;
+	MySQLConexion mysql;
+	
+	public CompraM(){
+		
+		mysql = new MySQLConexion();
+	}
+}

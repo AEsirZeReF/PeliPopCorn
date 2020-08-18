@@ -1,0 +1,17 @@
+package Interfaces;
+
+import java.util.ArrayList;
+
+import Class.Bocados;
+import Mantenimientos.BocadosM;
+
+public class BocadosG {
+	BocadosM bocadosM;
+	
+	public BocadosG(){
+		bocadosM = new BocadosM();
+	}
+	public ArrayList<Bocados> ListarBocados(){
+		return bocadosM.ListarBocados();
+	}
+}
